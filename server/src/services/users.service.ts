@@ -9,8 +9,12 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
-  async create(userData: any): Promise<User> {
-    return this.userModel.create(userData);
+  async create(
+    email: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<User> {
+    return this.userModel.create({ email, firstName, lastName });
   }
 
   async findAll(): Promise<User[]> {
