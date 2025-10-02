@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { Order } from 'src/models/order.model';
 import { User } from 'src/models/user.model';
 
@@ -10,8 +11,8 @@ export class OrdersService {
     private orderModel: typeof Order,
   ) {}
 
-  async create(userId: number, totalAmount: number): Promise<Order> {
-    return this.orderModel.create({ userId, totalAmount });
+  async create(orderData: CreateOrderDto): Promise<Order> {
+    return this.orderModel.create({ ...orderData });
   }
 
   async findAllByUserId(userId: number): Promise<Order[]> {

@@ -1,4 +1,5 @@
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { OrdersService } from 'src/services/orders.service';
 
 @Controller('orders')
@@ -7,12 +8,8 @@ export class OrdersController {
 
   // POST /orders
   @Post()
-  async create(
-    @Body('userId') userId: number,
-    @Body('totalAmount') totalAmount: number,
-  ) {
-    // In a real app, userId would likely come from an authentication guard
-    return this.ordersService.create(userId, totalAmount);
+  async create(@Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.create({ ...createOrderDto });
   }
 
   // GET /orders/user/:userId
