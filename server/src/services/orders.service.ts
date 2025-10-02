@@ -10,12 +10,10 @@ export class OrdersService {
     private orderModel: typeof Order,
   ) {}
 
-  // Create a new Order for a specific User
   async create(userId: number, totalAmount: number): Promise<Order> {
     return this.orderModel.create({ userId, totalAmount });
   }
 
-  // Find all orders for a specific user
   async findAllByUserId(userId: number): Promise<Order[]> {
     return this.orderModel.findAll({
       where: { userId },
@@ -24,7 +22,6 @@ export class OrdersService {
     });
   }
 
-  // Find a single order and include its user
   async findOne(id: number): Promise<Order> {
     const order = await this.orderModel.findByPk(id, {
       include: [{ model: User }],
