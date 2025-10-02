@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { User } from 'src/models/user.model';
+import { FindOneUserParams } from 'src/params/find-one-user.params';
 import { UsersService } from 'src/services/users.service';
 
 @Controller('users')
@@ -22,9 +23,10 @@ export class UsersController {
 
   // GET /users/:id
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<User> {
-    const user = await this.usersService.findOne(id);
-    if (!user) throw new NotFoundException(`User with id ${id} not found.`);
+  async findOne(@Param() params: FindOneUserParams): Promise<User> {
+    const user = await this.usersService.findOne(params.id);
+    if (!user)
+      throw new NotFoundException(`User with id ${params.id} not found.`);
     return user;
   }
 
