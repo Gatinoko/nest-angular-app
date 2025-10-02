@@ -21,9 +21,9 @@ export class UsersService {
     return this.userModel.findAll();
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<User | null> {
     const user = await this.userModel.findByPk(id);
-    if (!user) throw new Error(`User with id ${id} not found`);
+    if (!user) return null;
     return user;
   }
 }
