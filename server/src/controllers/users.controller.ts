@@ -6,6 +6,7 @@ import {
   Param,
   NotFoundException,
 } from '@nestjs/common';
+import { CreateUserDto } from 'src/dto/create-user.dto';
 import { User } from 'src/models/user.model';
 import { UsersService } from 'src/services/users.service';
 
@@ -29,11 +30,7 @@ export class UsersController {
 
   // POST /users
   @Post()
-  async create(
-    @Body('email') email: string,
-    @Body('firstName') firstName: string,
-    @Body('lastName') lastName: string,
-  ): Promise<User> {
-    return this.usersService.create(email, firstName, lastName);
+  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto);
   }
 }
