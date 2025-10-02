@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from './models/user.model';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
       database: process.env.DB_NAME || 'nestjs',
       autoLoadModels: true, // Automatically load models defined below
       synchronize: true, // Automatically create tables based on models
+      models: [User],
     }),
   ],
   controllers: [AppController],
