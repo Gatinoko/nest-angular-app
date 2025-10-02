@@ -4,8 +4,10 @@ import {
   Table,
   BelongsTo,
   ForeignKey,
+  DataType,
 } from 'sequelize-typescript';
 import { User } from './user.model';
+import { OrderStatus } from 'src/enums/order-status.enum';
 
 @Table
 export class Order extends Model {
@@ -15,8 +17,13 @@ export class Order extends Model {
   @Column({ allowNull: false })
   totalAmount: number;
 
-  @Column({ defaultValue: 'pending' })
-  status: 'confirmed' | 'pending' | 'fulfilled';
+  @Column({
+    type: DataType.ENUM,
+    values: Object.values(OrderStatus),
+    allowNull: false,
+    defaultValue: 'pending',
+  })
+  status: 'pending' | 'approved' | 'fulfilled';
 
   // Link this order to a User ID
   @ForeignKey(() => User)
