@@ -15,6 +15,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+
 interface IRegistrationForm {
   firstName: AbstractControl<string | null>;
   lastName: AbstractControl<string | null>;
@@ -57,7 +59,7 @@ export const passwordMatchValidator: ValidatorFn = (
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationFormComponent {
-  private formBuilder = inject(FormBuilder);
+  private userService = inject(UserService);
 
   registrationForm = new FormGroup<IRegistrationForm>(
     {
@@ -112,10 +114,20 @@ export class RegistrationFormComponent {
     console.log(this.registrationForm);
 
     if (this.registrationForm.valid) {
-      const { email, password } = this.registrationForm.value;
+      const { email, firstName, lastName, password } =
+        this.registrationForm.value;
 
-      // LOGIC TO CALL NESTJS SERVICE/API HERE (e.g., this.userService.register({email, password}))
-      console.log('Registering user with data:', { email, password });
+      this.userService.register({
+        email: email!,
+        firstName: firstName!,
+        lastName: lastName!,
+        password: password!,
+      });
+
+      console.log('Registering user with data:', {
+        email: email,
+        password: password,
+      });
 
       this.submissionMessage.set(
         `Registration successful for email: ${email}!`
