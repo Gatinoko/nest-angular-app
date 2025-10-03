@@ -1,0 +1,50 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bg-red-300">
+  <!-- Email field -->
+  <div>
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      formControlName="email"
+      placeholder="example@gmail.com"
+      required
+    />
+
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('email')) { @if (emailControl.hasError('required')) { Email
+      is required. } @else if (emailControl.hasError('email')) { Please enter a
+      valid email address. } }
+    </span>
+  </div>
+
+  <!-- Password field -->
+  <div>
+    <label for="password">Password</label>
+    <input
+      id="password"
+      name="password"
+      type="text"
+      formControlName="password"
+      required
+    />
+
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('password')) { @if (passwordControl.hasError('required')) {
+      Password is required. } @else if (passwordControl.hasError('minlength')) {
+      Password must be at least 8 characters long. } }
+    </span>
+  </div>
+
+  <!-- Submit button -->
+  <button type="button" (click)="onSubmit()" class="bg-blue-300">Login</button>
+
+  <!-- Submission Message -->
+  @if (submissionMessage()) {
+  <div
+    class="mt-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium"
+  >
+    {{ submissionMessage() }}
+  </div>
+  }
+</form>
