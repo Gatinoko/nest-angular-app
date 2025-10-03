@@ -1,0 +1,101 @@
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="bg-red-300">
+  <!-- First name field -->
+  <div>
+    <label for="first-name">First name</label>
+    <input
+      id="first-name"
+      name="first-name"
+      type="text"
+      formControlName="firstName"
+      required
+    />
+  </div>
+
+  <!-- Last name field -->
+  <div>
+    <label for="last-name">Last name</label>
+    <input
+      id="last-name"
+      name="last-name"
+      type="text"
+      formControlName="lastName"
+      required
+    />
+  </div>
+
+  <!-- Email field -->
+  <div>
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      formControlName="email"
+      placeholder="example@gmail.com"
+      required
+    />
+
+    @if (isInvalid('email')) {
+    <p class="mt-1 text-xs text-red-600">
+      @if (emailControl.hasError('required')) { Email is required. } @else if
+      (emailControl.hasError('email')) { Please enter a valid email address. }
+    </p>
+    }
+  </div>
+
+  <!-- Password field -->
+  <div>
+    <label for="password">Password</label>
+    <input
+      id="password"
+      name="password"
+      type="text"
+      formControlName="password"
+      required
+    />
+
+    @if (isInvalid('password')) {
+    <p class="mt-1 text-xs text-red-600">
+      @if (passwordControl.hasError('required')) { Password is required. } 
+      @else if (passwordControl.hasError('minlength')) { Password must be at least 8
+      characters long. }
+    </p>
+    }
+  </div>
+
+  <!-- Confirm password -->
+  <div>
+    <label for="confirm-password">Confirm password</label>
+    <input
+      id="confirm-password"
+      name="confirm-password"
+      type="text"
+      formControlName="confirmPassword"
+      required
+    />
+
+    @if (isInvalid('confirmPassword') && registrationForm.hasError('mismatch')) {
+        <p class="mt-1 text-xs text-red-600">
+        Passwords must match.
+        </p>
+    } @else if (isInvalid('confirmPassword') && confirmPasswordControl.hasError('required')) {
+        <p class="mt-1 text-xs text-red-600">
+        Confirm password is required.
+        </p>
+    }
+  </div>
+
+  <!-- Submit button -->
+  <button type="button" (click)="onSubmit()" class="bg-blue-300">
+    Register
+  </button>
+
+  <!-- Submission Message -->
+  @if (submissionMessage()) {
+  <div
+    class="mt-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium"
+  >
+    {{ submissionMessage() }}
+  </div>
+  }
+</form>
