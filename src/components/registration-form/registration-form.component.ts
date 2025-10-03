@@ -8,6 +8,7 @@ import {
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
@@ -52,23 +53,20 @@ export const passwordMatchValidator: ValidatorFn = (
 export class RegistrationFormComponent {
   private formBuilder = inject(FormBuilder);
 
-  registrationForm!: FormGroup;
+  registrationForm: FormGroup = new FormGroup(
+    {
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+    passwordMatchValidator
+  );
   submissionMessage = signal<string | null>(null);
-
-  ngOnInit(): void {
-    this.registrationForm = this.formBuilder.group(
-      {
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ['', Validators.required],
-      },
-      {
-        validators: passwordMatchValidator,
-      }
-    );
-  }
 
   // Convenience getters for accessing controls in the template
   get emailControl() {
