@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -45,13 +50,13 @@ export const passwordMatchValidator: ValidatorFn = (
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationFormComponent {
-  constructor(private fb: FormBuilder) {}
+  private formBuilder = inject(FormBuilder);
 
   registrationForm!: FormGroup;
   submissionMessage = signal<string | null>(null);
 
   ngOnInit(): void {
-    this.registrationForm = this.fb.group(
+    this.registrationForm = this.formBuilder.group(
       {
         firstName: ['', [Validators.required]],
         lastName: ['', [Validators.required]],
