@@ -9,6 +9,14 @@
       formControlName="firstName"
       required
     />
+
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('firstName')) {
+        @if (firstNameControl.hasError('required')) { 
+          First name is required. 
+        } 
+      }
+    </span>
   </div>
 
   <!-- Last name field -->
@@ -21,6 +29,14 @@
       formControlName="lastName"
       required
     />
+
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('lastName')) {
+        @if (lastNameControl.hasError('required')) { 
+          Last name is required. 
+        } 
+      }
+    </span>
   </div>
 
   <!-- Email field -->
@@ -35,12 +51,16 @@
       required
     />
 
-    @if (isInvalid('email')) {
-    <p class="mt-1 text-xs text-red-600">
-      @if (emailControl.hasError('required')) { Email is required. } @else if
-      (emailControl.hasError('email')) { Please enter a valid email address. }
-    </p>
-    }
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('email')) {
+        @if (emailControl.hasError('required')) { 
+          Email is required. 
+        } 
+        @else if (emailControl.hasError('email')) { 
+          Please enter a valid email address. 
+        }
+      }
+    </span>
   </div>
 
   <!-- Password field -->
@@ -54,13 +74,16 @@
       required
     />
 
-    @if (isInvalid('password')) {
-    <p class="mt-1 text-xs text-red-600">
-      @if (passwordControl.hasError('required')) { Password is required. } 
-      @else if (passwordControl.hasError('minlength')) { Password must be at least 8
-      characters long. }
-    </p>
-    }
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('password')) {
+        @if (passwordControl.hasError('required')) { 
+          Password is required. 
+        } 
+        @else if (passwordControl.hasError('minlength')) { 
+          Password must be at least 8 characters long. 
+        }
+      }
+    </span>
   </div>
 
   <!-- Confirm password -->
@@ -74,15 +97,15 @@
       required
     />
 
-    @if (isInvalid('confirmPassword') && registrationForm.hasError('mismatch')) {
-        <p class="mt-1 text-xs text-red-600">
-        Passwords must match.
-        </p>
-    } @else if (isInvalid('confirmPassword') && confirmPasswordControl.hasError('required')) {
-        <p class="mt-1 text-xs text-red-600">
-        Confirm password is required.
-        </p>
-    }
+    <span class="mt-1 text-xs text-red-600">
+      @if (isInvalid('confirmPassword')) {
+        @if (registrationForm.hasError('mismatch')) {
+          Passwords must match.
+        } @else if (confirmPasswordControl.hasError('required')) {
+          Confirm password is required.
+        }
+      }
+    </span>
   </div>
 
   <!-- Submit button -->

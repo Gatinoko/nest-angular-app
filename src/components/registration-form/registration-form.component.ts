@@ -74,7 +74,14 @@ export class RegistrationFormComponent {
   );
   submissionMessage = signal<string | null>(null);
 
-  // Convenience getters for accessing controls in the template
+  get firstNameControl() {
+    return this.registrationForm.get('firstName')!;
+  }
+
+  get lastNameControl() {
+    return this.registrationForm.get('lastName')!;
+  }
+
   get emailControl() {
     return this.registrationForm.get('email')!;
   }
