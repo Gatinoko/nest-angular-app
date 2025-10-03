@@ -22,7 +22,6 @@ interface IRegistrationForm {
 export const passwordMatchValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
-  console.log('validator');
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
 
@@ -104,9 +103,6 @@ export class RegistrationFormComponent {
    * Handles form submission logic.
    */
   onSubmit(): void {
-    console.log('form submit');
-    console.log(this.registrationForm);
-
     if (this.registrationForm.valid) {
       const { email, firstName, lastName, password } =
         this.registrationForm.value;
