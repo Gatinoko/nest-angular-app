@@ -23,7 +23,7 @@ export class Order extends Model {
     allowNull: false,
     defaultValue: 'pending',
   })
-  status: 'pending' | 'approved' | 'fulfilled';
+  status: OrderStatus;
 
   // Link this order to a User ID
   @ForeignKey(() => User)
