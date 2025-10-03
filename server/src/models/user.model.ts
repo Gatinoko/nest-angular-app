@@ -22,4 +22,7 @@ export class User extends Model {
     defaultValue: 'user',
   })
   role: UserRole;
+
+  @Column({ allowNull: false })
+  password: string;
 }
