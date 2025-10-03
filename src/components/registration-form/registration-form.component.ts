@@ -15,8 +15,14 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+interface IRegistrationForm {
+  firstName: AbstractControl<string | null>;
+  lastName: AbstractControl<string | null>;
+  email: AbstractControl<string | null>;
+  password: AbstractControl<string | null>;
+  confirmPassword: AbstractControl<string | null>;
+}
 
-// Ensures 'password' and 'confirmPassword' fields match
 export const passwordMatchValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
@@ -53,7 +59,7 @@ export const passwordMatchValidator: ValidatorFn = (
 export class RegistrationFormComponent {
   private formBuilder = inject(FormBuilder);
 
-  registrationForm: FormGroup = new FormGroup(
+  registrationForm = new FormGroup<IRegistrationForm>(
     {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
