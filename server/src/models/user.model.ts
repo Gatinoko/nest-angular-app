@@ -1,3 +1,4 @@
+import { validate } from 'class-validator';
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 import { UserRole } from 'src/enums/user-role.enum';
 
@@ -6,13 +7,29 @@ export class User extends Model {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number = 0;
 
-  @Column({ allowNull: false, unique: true })
+  @Column({
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
+    },
+  })
   email: string;
 
-  @Column({ allowNull: false })
+  @Column({
+    allowNull: false,
+    validate: {
+      noEmpty: true,
+    },
+  })
   firstName: string;
 
-  @Column
+  @Column({
+    allowNull: false,
+    validate: {
+      noEmpty: true,
+    },
+  })
   lastName: string;
 
   @Column({
@@ -23,6 +40,11 @@ export class User extends Model {
   })
   role: UserRole;
 
-  @Column({ allowNull: false })
+  @Column({
+    allowNull: false,
+    validate: {
+      noEmpty: true,
+    },
+  })
   password: string;
 }
