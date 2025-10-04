@@ -9,10 +9,10 @@ export const routes: Routes = [
   // Default route (e.g., http://localhost:4200/)
   { path: '', component: HomeComponent, title: 'Home Page' },
 
-  // Route for the About page (e.g., http://localhost:4200/login)
+  // Route for the Login page (e.g., http://localhost:4200/login)
   { path: 'login', component: LoginComponent, title: 'Login' },
 
-  // Route for the Contact page (e.g., http://localhost:4200/register)
+  // Route for the Register page (e.g., http://localhost:4200/register)
   { path: 'register', component: RegisterComponent, title: 'Register' },
 
   // Route for the Dashboard page (e.g., http://localhost:4200/dashboard)
