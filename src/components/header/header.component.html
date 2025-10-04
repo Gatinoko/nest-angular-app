@@ -1,0 +1,24 @@
+<header class="bg-blue-400 flex">
+  <a routerLink="/" class="flex-grow">Title</a>
+
+    <!-- Welcome message -->
+    @if (authService.isLoggedIn()) {
+        <span>
+            Welcome, {{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName}}
+        </span>
+    }
+
+    <!-- Login, register, and logout buttons -->
+    @if (authService.isLoggedIn()) {
+        <button (click)="logout()" class="px-3 py-1 text-sm font-medium rounded-md text-indigo-50 bg-indigo-700 hover:bg-indigo-800 transition">
+            Logout
+        </button>
+    } @else {
+        <a routerLink="/login" class="px-3 py-1 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition">
+            Login
+        </a>
+        <a routerLink="/register" class="px-3 py-1 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-100 transition">
+            Register
+        </a>
+    }
+</header>
