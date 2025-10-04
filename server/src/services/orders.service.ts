@@ -23,8 +23,6 @@ export class OrdersService {
   async findAllByUserId(userId: number): Promise<Order[]> {
     return this.orderModel.findAll({
       where: { userId },
-      // Include the associated User data using the 'include' option
-      include: [{ model: User }],
     });
   }
 
