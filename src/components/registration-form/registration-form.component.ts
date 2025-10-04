@@ -129,7 +129,7 @@ export class RegistrationFormComponent {
       // If invalid, mark all fields as touched to trigger error messages
       this.registrationForm.markAllAsTouched();
       this.submissionMessage.set(null);
-      console.error('Form validation failed.');
+      console.error('Registration form validation failed.');
     }
   }
 }

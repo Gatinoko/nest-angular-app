@@ -78,7 +78,7 @@ export class LoginFormComponent {
     else {
       this.loginForm.markAllAsTouched();
       this.submissionMessage.set(null);
-      console.error('Form validation failed.');
+      console.error('Login form validation failed.');
     }
   }
 }
