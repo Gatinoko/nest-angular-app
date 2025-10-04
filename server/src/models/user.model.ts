@@ -19,7 +19,7 @@ export class User extends Model {
   @Column({
     allowNull: false,
     validate: {
-      noEmpty: true,
+      notEmpty: true,
     },
   })
   firstName: string;
@@ -27,7 +27,7 @@ export class User extends Model {
   @Column({
     allowNull: false,
     validate: {
-      noEmpty: true,
+      notEmpty: true,
     },
   })
   lastName: string;
@@ -43,7 +43,7 @@ export class User extends Model {
   @Column({
     allowNull: false,
     validate: {
-      noEmpty: true,
+      notEmpty: true,
     },
   })
   password: string;
