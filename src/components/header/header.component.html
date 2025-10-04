@@ -10,6 +10,9 @@
 
     <!-- Login, register, and logout buttons -->
     @if (authService.isLoggedIn()) {
+        <a routerLink="/dashboard" class="px-3 py-1 text-sm font-medium rounded-md text-white hover:bg-indigo-700 transition">
+            Dashboard
+        </a>
         <button (click)="logout()" class="px-3 py-1 text-sm font-medium rounded-md text-indigo-50 bg-indigo-700 hover:bg-indigo-800 transition">
             Logout
         </button>
