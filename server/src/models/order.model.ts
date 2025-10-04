@@ -14,6 +14,14 @@ export class Order extends Model {
   @Column({ primaryKey: true, autoIncrement: true })
   id: number = 0;
 
+  @Column({
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  })
+  product: string;
+
   @Column({ allowNull: false })
   totalAmount: number;
 
