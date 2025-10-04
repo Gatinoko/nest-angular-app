@@ -54,7 +54,7 @@ export const passwordMatchValidator: ValidatorFn = (
 export class RegistrationFormComponent {
   private userService = inject(UserService);
 
-  registrationForm = new FormGroup<IRegistrationForm>(
+  public registrationForm = new FormGroup<IRegistrationForm>(
     {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
@@ -67,7 +67,7 @@ export class RegistrationFormComponent {
     },
     passwordMatchValidator
   );
-  submissionMessage = signal<string | null>(null);
+  public submissionMessage = signal<string | null>(null);
 
   get firstNameControl() {
     return this.registrationForm.get('firstName')!;
