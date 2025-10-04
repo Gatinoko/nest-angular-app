@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  inject,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,6 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 interface ILoginForm {
   email: AbstractControl<string | null>;
@@ -21,6 +27,8 @@ interface ILoginForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent {
+  private authService = inject(AuthService);
+
   loginForm = new FormGroup<ILoginForm>({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -53,17 +61,17 @@ export class LoginFormComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      /**
-       * Call server login logic here
-       */
-
-      console.log('Logging in user with data:', {
-        email: email,
-        password: password,
+      this.authService.login({ email: email!, password: password! }).subscribe({
+        next: (response) => {
+          console.log('User logged in:', response.user);
+          this.submissionMessage.set(`Login successful for email: ${email!}!`);
+          this.loginForm.reset();
+        },
+        error: (err) => {
+          console.error('Login failed:', err.message);
+          this.submissionMessage.set(err.message);
+        },
       });
-
-      this.submissionMessage.set(`Login successful for email: ${email!}!`);
-      this.loginForm.reset();
     }
 
     // If invalid, mark all fields as touched to trigger error messages
