@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { UpdateOrderDto } from 'src/dto/update-order.dto';
@@ -43,7 +44,7 @@ export class OrdersController {
   // PUT /orders/:id
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateOrderDto: UpdateOrderDto,
   ) {
     return this.ordersService.update(id, updateOrderDto);
@@ -51,7 +52,7 @@ export class OrdersController {
 
   // DELETE /orders/:id
   @Delete(':id')
-  async delete(@Param('id') id: number) {
+  async delete(@Param('id', ParseIntPipe) id: number) {
     return this.ordersService.delete(id);
   }
 }
