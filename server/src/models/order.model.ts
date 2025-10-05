@@ -12,7 +12,7 @@ import { OrderStatus } from 'src/enums/order-status.enum';
 @Table
 export class Order extends Model {
   @Column({ primaryKey: true, autoIncrement: true })
-  id: number = 0;
+  id: number;
 
   @Column({
     allowNull: false,
