@@ -4,6 +4,7 @@ import { LoginComponent } from '../pages/login/login.component';
 import { RegisterComponent } from '../pages/register/register.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { authGuard } from '../guards/auth.guard';
+import { CreateOrderComponent } from '../pages/create-order/create-order.component';
 
 export const routes: Routes = [
   // Default route (e.g., http://localhost:4200/)
@@ -20,6 +21,14 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     title: 'Dashboard',
+    canActivate: [authGuard],
+  },
+
+  // Route for the Create Order page (e.g. http://localhost:4200/dashboard/create-order)
+  {
+    path: 'dashboard/create-order',
+    component: CreateOrderComponent,
+    title: 'Create Order',
     canActivate: [authGuard],
   },
 
