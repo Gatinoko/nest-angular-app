@@ -5,6 +5,7 @@ import { RegisterComponent } from '../pages/register/register.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { authGuard } from '../guards/auth.guard';
 import { CreateOrderComponent } from '../pages/create-order/create-order.component';
+import { UpdateOrderComponent } from '../pages/update-order/update-order.component';
 
 export const routes: Routes = [
   // Default route (e.g., http://localhost:4200/)
@@ -29,6 +30,14 @@ export const routes: Routes = [
     path: 'dashboard/create-order',
     component: CreateOrderComponent,
     title: 'Create Order',
+    canActivate: [authGuard],
+  },
+
+  // Route for the Update Order page (e.g. http://localhost:4200/dashboard/update-order/:id)
+  {
+    path: 'dashboard/update-order/:id',
+    component: UpdateOrderComponent,
+    title: 'Update Order',
     canActivate: [authGuard],
   },
 

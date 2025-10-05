@@ -1,1 +1,92 @@
-<p>update-order-form works!</p>,
+@if (isLoading()) {
+  <p class="text-indigo-600">Loading order data...</p>
+} 
+
+@else if (error()) {
+  <p class="text-red-600">{{ error() }}</p>
+  <button (click)="router.navigate(['/'])" class="mt-4 text-blue-500">Go Home</button>
+}
+
+@else if (orderData()) {
+  <form [formGroup]="updateOrderForm" (ngSubmit)="onSubmit()" class="bg-red-300">
+    <!-- Product field field -->
+    <div>
+      <label for="product">Product</label>
+      <input
+        id="product"
+        name="product"
+        type="text"
+        formControlName="product"
+        required
+      />
+  
+      <span class="mt-1 text-xs text-red-600">
+        @if (isInvalid('product')) {
+          @if (productControl.hasError('required')) { 
+            Product is required. 
+          } 
+        }
+      </span>
+    </div>
+  
+    <!-- Total amount field -->
+    <div>
+      <label for="total-amount">Total amount</label>
+      <input
+        id="total-amount"
+        name="total-amount"
+        type="number"
+        formControlName="totalAmount"
+        required
+      />
+  
+      <span class="mt-1 text-xs text-red-600">
+        @if (isInvalid('totalAmount')) {
+          @if (totalAmountControl.hasError('required')) { 
+            Total amount is required. 
+          } 
+        }
+      </span>
+    </div>
+  
+    <!-- Status field -->
+    <div>
+      <label for="status">Status</label>
+      <select 
+        id="status" 
+        name="status" 
+        formControlName="status"
+      >
+        @for (status of statusOptions; track status.id) {
+          <option [ngValue]="status.value">
+              {{ status.text }}
+          </option>
+        }
+      </select>
+  
+      <span class="mt-1 text-xs text-red-600">
+        @if (isInvalid('status')) {
+          @if (statusControl.hasError('required')) { 
+            Status is required. 
+          } 
+        }
+      </span>
+    </div>
+  
+    <!-- Submit button -->
+    <button type="button" (click)="onSubmit()" class="bg-blue-300">
+      Update Order
+    </button>
+  
+    <!-- Submission Message -->
+    @if (submissionMessage()) {
+    <div
+      class="mt-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium"
+    >
+      {{ submissionMessage() }}
+    </div>
+    }
+  </form>
+}
+
+
