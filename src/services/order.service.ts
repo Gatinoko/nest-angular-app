@@ -53,7 +53,7 @@ export class OrderService {
    */
   updateOrder(id: number, changes: UpdateOrderDto): Observable<Order> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.patch<Order>(url, changes); // PATCH is typically used for partial updates
+    return this.http.put<Order>(url, changes);
   }
 
   /**
