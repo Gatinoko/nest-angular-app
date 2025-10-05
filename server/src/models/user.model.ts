@@ -12,6 +12,7 @@ export class User extends Model {
     unique: true,
     validate: {
       notEmpty: true,
+      isEmail: true,
     },
   })
   email: string;
