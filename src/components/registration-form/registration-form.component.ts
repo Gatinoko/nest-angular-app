@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -49,7 +54,7 @@ export const passwordMatchValidator: ValidatorFn = (
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationFormComponent {
   private userService = inject(UserService);
