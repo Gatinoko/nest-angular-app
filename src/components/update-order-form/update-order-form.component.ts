@@ -43,9 +43,7 @@ export class UpdateOrderFormComponent {
   public updateOrderForm = new FormGroup<IUpdateOrderForm>({
     product: new FormControl('', [Validators.required]),
     totalAmount: new FormControl('', [Validators.required]),
-    status: new FormControl({ value: 'pending', disabled: true }, [
-      Validators.required,
-    ]),
+    status: new FormControl('pending', [Validators.required]),
   });
   public submissionMessage = signal<string | null>(null);
   public statusOptions = [
@@ -139,13 +137,13 @@ export class UpdateOrderFormComponent {
    */
   onSubmit(): void {
     if (this.updateOrderForm.valid) {
-      const { product, totalAmount } = this.updateOrderForm.value;
+      const { product, totalAmount, status } = this.updateOrderForm.value;
 
       this.orderService
         .updateOrder(this.orderId()!, {
           product: product!,
           totalAmount: Number(totalAmount!),
-          status: 'pending',
+          status: status,
         })
         .subscribe({
           next: (response) => {
