@@ -9,6 +9,7 @@ import { OrderService } from '../../services/order.service';
 import { Order } from '../../../server/dist/models/order.model';
 import { DecimalPipe } from '@angular/common';
 import { finalize, catchError, of } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-order-table',
@@ -19,6 +20,7 @@ import { finalize, catchError, of } from 'rxjs';
 })
 export class OrderTableComponent {
   private orderService = inject(OrderService);
+  private authService = inject(AuthService);
 
   public orders: WritableSignal<Order[]> = signal([]);
   public isLoading: WritableSignal<boolean> = signal(false);
@@ -30,13 +32,12 @@ export class OrderTableComponent {
 
   /**
    * Fetches all orders.
-   * @todo Implement fetch call for only the user's respective orders.
    */
   fetchOrders(): void {
     this.isLoading.set(true);
     this.error.set(null);
     this.orderService
-      .getAllOrders()
+      .getOrdersByUserId(this.authService.currentUser()?.id!)
       .pipe(
         finalize(() => this.isLoading.set(false)),
         catchError((err) => {
