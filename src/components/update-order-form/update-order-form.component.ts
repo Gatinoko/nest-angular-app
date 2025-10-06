@@ -142,7 +142,7 @@ export class UpdateOrderFormComponent {
    */
   onSubmit(): void {
     if (this.updateOrderForm.valid) {
-      const { product, status, totalAmount } = this.updateOrderForm.value;
+      const { product, totalAmount } = this.updateOrderForm.value;
 
       this.orderService
         .updateOrder(this.orderId()!, {
@@ -152,14 +152,7 @@ export class UpdateOrderFormComponent {
         })
         .subscribe({
           next: (response) => {
-            this.submissionMessage.set(
-              `Order edit successful for order: ${totalAmount}, ${status}!`
-            );
-            // this.updateOrderForm.reset({
-            //   product: '',
-            //   totalAmount: '',
-            //   status: 'pending',
-            // });
+            this.submissionMessage.set(`Order edit successful!`);
           },
           error: (err) => this.submissionMessage.set(err.message),
         });
