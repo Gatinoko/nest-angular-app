@@ -96,9 +96,7 @@ export class CreateOrderFormComponent {
         })
         .subscribe({
           next: (response) => {
-            this.submissionMessage.set(
-              `Order creation successful for order: ${totalAmount}, ${status}!`
-            );
+            this.submissionMessage.set(`Order creation successful!`);
             this.createOrderForm.reset({
               product: '',
               totalAmount: '',
