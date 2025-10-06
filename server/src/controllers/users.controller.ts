@@ -5,8 +5,10 @@ import {
   Body,
   Param,
   NotFoundException,
+  ConflictException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { UniqueConstraintError } from 'sequelize';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { LoginUserDto } from 'src/dto/login-user.dto';
 import { User } from 'src/models/user.model';
@@ -35,6 +37,15 @@ export class UsersController {
   // POST /users
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    try {
+      // In a real application, the password must be hashed here, right before creation
+      return await this.usersService.create(createUserDto);
+    } catch (error) {
+      if (error instanceof UniqueConstraintError)
+        throw new ConflictException('Email is already registered.');
+    }
+  }
+
   // POST /users/login
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {

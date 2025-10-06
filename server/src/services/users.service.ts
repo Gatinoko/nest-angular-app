@@ -22,6 +22,9 @@ export class UsersService {
    * @returns Created user information if successful.
    */
   async create(userData: CreateUserDto): Promise<User> {
+    return await this.userModel.create({ ...userData });
+  }
+
   /**
    * Finds all registered users.
    * @returns Array of user objects if successful.
