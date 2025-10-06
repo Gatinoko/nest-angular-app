@@ -15,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface IRegistrationForm {
   firstName: AbstractControl<string | null>;
@@ -112,12 +113,28 @@ export class RegistrationFormComponent {
       const { email, firstName, lastName, password } =
         this.registrationForm.value;
 
-      this.userService.register({
-        email: email!,
-        firstName: firstName!,
-        lastName: lastName!,
-        password: password!,
-      });
+      this.userService
+        .register({
+          email: email!,
+          firstName: firstName!,
+          lastName: lastName!,
+          password: password!,
+        })
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            console.log('User registered:', response.email);
+            this.submissionMessage.set(
+              `Registration successful for email: ${email!}!`
+            );
+            this.registrationForm.reset();
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+            console.error('Registration failed:', err.error);
+            this.submissionMessage.set(err.error.message);
+          },
+        });
 
       console.log('Registering user with data:', {
         email: email,
