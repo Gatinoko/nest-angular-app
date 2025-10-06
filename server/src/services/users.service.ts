@@ -36,9 +36,7 @@ export class UsersService {
    * @returns User object if successful.
    */
   async findOne(id: number): Promise<User | null> {
-    const user = await this.userModel.findByPk(id);
-    if (!user) return null;
-    return user;
+    return await this.userModel.findByPk(id);
   }
 
   /**
