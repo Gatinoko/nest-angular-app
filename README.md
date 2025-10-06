@@ -39,3 +39,6 @@ Siga os passos abaixo para colocar a aplicação em funcionamento:
 - [ ] Utilizar o Docker para conteinerização da aplicação junto a um banco de dados relacional.
 - [x] Utilizar efetivamente um banco de dados para armazenar e consultar os dados do CRUD.
 - [ ] Propor e implementar uma solução para limitar o acesso a grandes volumes de dados, como paginação, filtros ou limites de resposta.
+
+## Demo
+https://github.com/user-attachments/assets/3ea48430-3c4b-4b5b-9619-af582e5623fc
