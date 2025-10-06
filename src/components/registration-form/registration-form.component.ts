@@ -142,18 +142,6 @@ export class RegistrationFormComponent {
             this.submissionMessage.set(err.error.message);
           },
         });
-
-      console.log('Registering user with data:', {
-        email: email,
-        password: password,
-      });
-
-      this.submissionMessage.set(
-        `Registration successful for email: ${email}!`
-      );
-
-      // Reset the form state
-      this.registrationForm.reset();
     } else {
       // If invalid, mark all fields as touched to trigger error messages
       this.registrationForm.markAllAsTouched();
