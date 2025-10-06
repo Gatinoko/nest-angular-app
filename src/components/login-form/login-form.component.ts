@@ -13,6 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface ILoginForm {
   email: AbstractControl<string | null>;
@@ -63,14 +64,13 @@ export class LoginFormComponent {
 
       this.authService.login({ email: email!, password: password! }).subscribe({
         next: (response) => {
-          console.log('User logged in:', response.user);
-          this.submissionMessage.set(`Login successful for email: ${email!}!`);
+          this.submissionMessage.set(
+            `Login successful for email: ${response.user.email!}!`
+          );
           this.loginForm.reset();
         },
-        error: (err) => {
-          console.error('Login failed:', err.message);
-          this.submissionMessage.set(err.message);
-        },
+        error: (err: HttpErrorResponse) =>
+          this.submissionMessage.set(err.error.message),
       });
     }
 
