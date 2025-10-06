@@ -12,7 +12,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { OrderService } from '../../services/order.service';
-import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Order } from '../../../server/dist/models/order.model';
@@ -82,7 +81,6 @@ export class UpdateOrderFormComponent {
   ngOnInit(): void {
     this.route.paramMap
       .pipe(
-        // 1. Get the 'id' parameter from the URL map
         switchMap((params) => {
           const idString = params.get('id');
           const id = idString ? parseInt(idString, 10) : null;
@@ -97,7 +95,6 @@ export class UpdateOrderFormComponent {
           this.isLoading.set(true);
           this.error.set(null);
 
-          // 2. Use the ID to call the service method
           return this.orderService.getOrderById(id);
         })
       )
