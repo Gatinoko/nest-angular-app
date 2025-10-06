@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CreateUserDto } from '../../server/dist/dto/create-user.dto';
 import { User } from '../../server/dist/models/user.model';
+import { LoginUserDto } from '../../server/dist/dto/login-user.dto';
+import { AuthResponse } from './auth.service';
 
 @Injectable({
   providedIn: 'root', // Makes the service a singleton and tree-shakable
@@ -39,5 +41,15 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<User>(url);
+  }
+
+  /**
+   * Validates user email and password combination.
+   * @param dto User login data transfer object.
+   */
+  validateUserLogin(dto: LoginUserDto): Observable<AuthResponse> {
+    const url = `${this.apiUrl}/login`;
+    const { email, password } = dto;
+    return this.http.post<AuthResponse>(url, { email, password });
   }
 }

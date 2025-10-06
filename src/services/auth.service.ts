@@ -4,28 +4,24 @@ import {
   signal,
   computed,
   effect,
+  inject,
 } from '@angular/core';
-import { Observable, of, delay, map, catchError, throwError } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../../server/dist/models/user.model';
 import { LoginUserDto } from '../../server/dist/dto/login-user.dto';
+import { UserService } from './user.service';
 
 export interface AuthResponse {
   accessToken: string;
   user: Partial<User>;
 }
 
-const MOCK_USER: Partial<User> = {
-  id: 1,
-  email: 'test@gmail.com',
-  firstName: 'Gabriel',
-  lastName: 'Tinoco',
-  password: '123123123',
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userService = inject(UserService);
+
   private currentUserSig: WritableSignal<Partial<User> | null> =
     signal<Partial<User> | null>(null);
   private accessTokenSig: WritableSignal<string | null> = signal<string | null>(
@@ -70,31 +66,16 @@ export class AuthService {
   /**
    * Simulates a login API call.
    * @param credentials The user's email and password.
-   * @returns An Observable of the AuthResponse.
+   * @returns Auth response observable.
    */
   login(credentials: LoginUserDto): Observable<AuthResponse> {
-    return of(credentials).pipe(
-      delay(1000),
-      map((creds) => {
-        // Mock validation (this is where the HTTP call to the NestJS backend would go)
-        if (
-          creds.email === MOCK_USER.email &&
-          creds.password === MOCK_USER.password
-        ) {
-          const mockToken = `mock_jwt_token_${new Date().getTime()}`;
+    return this.userService.validateUserLogin(credentials).pipe(
+      map((response) => {
+        // Update reactive signals on success
+        this.setSession(response.accessToken, response.user);
 
-          // Update reactive signals on success
-          this.setSession(mockToken, MOCK_USER);
-
-          // Return mock response (this is the value of the Observable)
-          return { accessToken: mockToken, user: MOCK_USER };
-        }
-
-        // Simulate a 401 Unauthorized response
-        else throw new Error('Invalid email or password.');
-      }),
-      catchError((error) => {
-        return throwError(() => error);
+        // Return mock response (this is the value of the Observable)
+        return { accessToken: response.accessToken, user: response.user };
       })
     );
   }
