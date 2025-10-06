@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 interface ICreateOrderForm {
   product: AbstractControl<string | null>;
@@ -30,6 +31,7 @@ interface ICreateOrderForm {
 export class CreateOrderFormComponent {
   private orderService = inject(OrderService);
   private authService = inject(AuthService);
+  public router = inject(Router);
   public createOrderForm = new FormGroup<ICreateOrderForm>({
     product: new FormControl('', [Validators.required]),
     totalAmount: new FormControl('', [Validators.required]),
@@ -102,6 +104,11 @@ export class CreateOrderFormComponent {
               totalAmount: '',
               status: 'pending',
             });
+
+            // Redirect user to dashboard after 1 second
+            setTimeout(() => {
+              this.router.navigate(['/dashboard']);
+            }, 1000);
           },
           error: (err) => this.submissionMessage.set(err.message),
         });

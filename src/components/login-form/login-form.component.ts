@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface ILoginForm {
   email: AbstractControl<string | null>;
@@ -29,6 +30,7 @@ interface ILoginForm {
 })
 export class LoginFormComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   loginForm = new FormGroup<ILoginForm>({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -68,6 +70,11 @@ export class LoginFormComponent {
             `Login successful for email: ${response.user.email!}!`
           );
           this.loginForm.reset();
+
+          // Redirect user to dashboard after 1 second
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000);
         },
         error: (err: HttpErrorResponse) =>
           this.submissionMessage.set(err.error.message),

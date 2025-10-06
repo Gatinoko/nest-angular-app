@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface IRegistrationForm {
   firstName: AbstractControl<string | null>;
@@ -59,6 +60,7 @@ export const passwordMatchValidator: ValidatorFn = (
 })
 export class RegistrationFormComponent {
   private userService = inject(UserService);
+  private router = inject(Router);
 
   public registrationForm = new FormGroup<IRegistrationForm>(
     {
@@ -128,6 +130,11 @@ export class RegistrationFormComponent {
               `Registration successful for email: ${email!}!`
             );
             this.registrationForm.reset();
+
+            // Redirect user to login after 1 second
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 1000);
           },
           error: (err: HttpErrorResponse) => {
             console.log(err);

@@ -148,6 +148,11 @@ export class UpdateOrderFormComponent {
         .subscribe({
           next: (response) => {
             this.submissionMessage.set(`Order edit successful!`);
+
+            // Redirect user to dashboard after 1 second
+            setTimeout(() => {
+              this.router.navigate(['/dashboard']);
+            }, 1000);
           },
           error: (err) => this.submissionMessage.set(err.message),
         });
