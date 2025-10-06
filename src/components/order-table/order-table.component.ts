@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
 })
 export class OrderTableComponent {
   private orderService = inject(OrderService);
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
 
   public orders: WritableSignal<Order[]> = signal([]);
   public isLoading: WritableSignal<boolean> = signal(false);
@@ -90,7 +90,7 @@ export class OrderTableComponent {
         return 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800';
       case 'pending':
         return 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
-      case 'confirmed':
+      case 'approved':
         return 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800';
       default:
         return 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800';
