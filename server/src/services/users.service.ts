@@ -1,13 +1,10 @@
-import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../models/user.model';
 import { CreateUserDto } from 'src/dto/create-user.dto';
-import { UniqueConstraintError } from 'sequelize';
 import { LoginUserDto } from 'src/dto/login-user.dto';
+import { IncorrectCredentialsException } from 'src/exceptions/incorrect-credentials.exception';
+import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
 
 @Injectable()
 export class UsersService {
@@ -56,13 +53,12 @@ export class UsersService {
     });
 
     // If user isn't found
-    if (!user) throw new UnauthorizedException('Invalid credentials.');
+    if (!user) throw new UserNotFoundException();
 
     const isPasswordMatching = userData.password === user.password;
 
     // If password is incorrect
-    if (!isPasswordMatching)
-      throw new UnauthorizedException('Invalid credentials.');
+    if (!isPasswordMatching) throw new IncorrectCredentialsException();
 
     // Turns user into a plain object
     const safeUser = user.toJSON();

@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateOrderDto } from 'src/dto/create-order.dto';
 import { UpdateOrderDto } from 'src/dto/update-order.dto';
+import { OrderNotFoundException } from 'src/exceptions/order-not-found.exception';
 import { Order } from 'src/models/order.model';
 import { User } from 'src/models/user.model';
 
@@ -50,7 +51,7 @@ export class OrdersService {
     const order = await this.orderModel.findByPk(id, {
       include: [{ model: User }],
     });
-    if (!order) throw new Error(`Order with id ${id} not found`);
+    if (!order) throw new OrderNotFoundException();
     return order;
   }
 
@@ -63,7 +64,7 @@ export class OrdersService {
    */
   async update(id: number, updateData: UpdateOrderDto): Promise<Order> {
     const order = await this.orderModel.findByPk(id);
-    if (!order) throw new NotFoundException(`Order with ID ${id} not found.`);
+    if (!order) throw new OrderNotFoundException();
 
     const [affectedCount, affectedRows] = await this.orderModel.update(
       updateData,
@@ -72,8 +73,7 @@ export class OrdersService {
         returning: true, // Returns updated records
       },
     );
-    if (affectedCount === 0)
-      throw new NotFoundException(`Order with ID ${id} could not be updated.`);
+    if (affectedCount === 0) throw new OrderNotFoundException();
 
     return affectedRows[0];
   }
