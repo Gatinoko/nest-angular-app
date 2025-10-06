@@ -64,18 +64,16 @@ export class OrdersService {
    */
   async update(id: number, updateData: UpdateOrderDto): Promise<Order> {
     const order = await this.orderModel.findByPk(id);
+
     if (!order) throw new OrderNotFoundException();
+    const [affectedCount] = await this.orderModel.update(updateData, {
+      where: { id },
+    });
 
-    const [affectedCount, affectedRows] = await this.orderModel.update(
-      updateData,
-      {
-        where: { id },
-        returning: true, // Returns updated records
-      },
-    );
     if (affectedCount === 0) throw new OrderNotFoundException();
+    const updatedOrder = await this.orderModel.findByPk(id);
 
-    return affectedRows[0];
+    return updatedOrder;
   }
 
   /**
