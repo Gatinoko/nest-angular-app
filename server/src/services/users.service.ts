@@ -16,29 +16,25 @@ export class UsersService {
     private userModel: typeof User,
   ) {}
 
+  /**
+   * Creates a new user object.
+   * @param userData The information required for creating a new user.
+   * @returns Created user information if successful.
+   */
   async create(userData: CreateUserDto): Promise<User> {
-    try {
-      return await this.userModel.create({ ...userData });
-    } catch (error) {
-      // Returns custom error message for when the provided email is already registered
-      if (error instanceof UniqueConstraintError) {
-        const uniqueFieldError = error.errors.find(
-          (e) => e.path === 'email' || e.validatorKey === 'not_unique',
-        );
-
-        if (uniqueFieldError)
-          throw new ConflictException('Email is already registered.');
-      }
-
-      // If it's another type of error (e.g., connection, validation, etc.), re-throw it
-      throw error;
-    }
-  }
-
+  /**
+   * Finds all registered users.
+   * @returns Array of user objects if successful.
+   */
   async findAll(): Promise<User[]> {
     return this.userModel.findAll();
   }
 
+  /**
+   * Finds a user by id.
+   * @param id User id.
+   * @returns User object if successful.
+   */
   async findOne(id: number): Promise<User | null> {
     const user = await this.userModel.findByPk(id);
     if (!user) return null;
