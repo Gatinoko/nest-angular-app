@@ -89,6 +89,8 @@ export class AuthService {
 
   /**
    * Updates the internal signals with new session data.
+   * @param token Auth token value.
+   * @param user The user associated with the auth token.
    */
   private setSession(token: string, user: Partial<User>): void {
     this.accessTokenSig.set(token);

@@ -16,6 +16,7 @@ export class UserService {
 
   /**
    * Registers a new user by sending a POST request to the NestJS API.
+   * @param dto User creation data transfer object.
    */
   register(dto: CreateUserDto): Observable<User> {
     const { email, password, firstName, lastName } = dto;
