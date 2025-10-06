@@ -56,7 +56,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button 
-                    (click)="editOrder(order.id)" 
+                    [routerLink]="`update-order/${order.id}`"
                     class="text-indigo-600 hover:text-indigo-900 transition mr-3 text-xs sm:text-sm"
                 >
                     Edit

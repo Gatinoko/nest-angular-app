@@ -10,10 +10,11 @@ import { Order } from '../../../server/dist/models/order.model';
 import { DecimalPipe } from '@angular/common';
 import { finalize, catchError, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-table',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './order-table.component.html',
   styleUrl: './order-table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,14 +52,6 @@ export class OrderTableComponent {
       .subscribe({
         next: (orders) => this.orders.set(orders),
       });
-  }
-
-  /**
-   * Simulates editing an order.
-   * @todo Finish implementation order editing.
-   */
-  editOrder(id: number): void {
-    alert(`Editing Order ID: ${id}.`);
   }
 
   /**
