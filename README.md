@@ -1,5 +1,5 @@
-# Desafio Técnico Zoppy - Desenvolvedor Jr.
-Este projeto foi desenvolvido como parte do Desafio Técnico para a vaga de Desenvolvedor Jr. na Zoppy. O objetivo é criar uma aplicação CRUD completa (Create, Read, Update, Delete) com persistência de dados e uma interface web moderna, utilizando o stack principal da empresa.
+# Nest Angular App
+Este projeto foi desenvolvido como parte do Desafio Técnico para a vaga de Desenvolvedor Jr. O objetivo é criar uma aplicação CRUD completa (Create, Read, Update, Delete) com persistência de dados e uma interface web moderna, utilizando o stack principal da empresa.
 
 ## Tema Escolhido
 O CRUD foi implementado para o tema **Pedidos (Orders)** e para **Clientes/Usuários (Users)** como desafio extra. Também fiz questão de criar uma implementação simples de autenticação e autorização de usuários para fazer o flow da aplicação fazer mais sentido. 
